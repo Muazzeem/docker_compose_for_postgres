@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 volumes:
   dev_postgres_data: {}
@@ -10,9 +10,19 @@ services:
       context: .
       dockerfile: ./compose/dev/postgres/Dockerfile
     image: explorer_dev_postgres
+    container_name: postgres
+    restart: always
     volumes:
       - dev_postgres_data:/var/lib/postgresql/data:Z
       - dev_postgres_data_backups:/backups:z
     env_file:
       - ./.envs/.dev/.postgres
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:5.0
+    container_name: redis
     restart: always
+    ports:
+      - 6379:6379
