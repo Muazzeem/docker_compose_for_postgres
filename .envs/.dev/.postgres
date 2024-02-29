@@ -2,6 +2,6 @@
 # ------------------------------------------------------------------------------
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
-POSTGRES_DB=campaign
+POSTGRES_DB=jobkhuzidev
 POSTGRES_USER=uDAegzpbzizQLGtcDFGdpHBHliKuMfIP
 POSTGRES_PASSWORD=P9gWmtvRdwRe88Wwg0cKJaJ4wSnyidQROqcFN0TcvBCmWxoMYYXe1gQWIz7j6Kkz
