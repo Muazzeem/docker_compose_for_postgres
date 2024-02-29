@@ -1,0 +1,36 @@
+version: '3'
+
+volumes:
+  dev_postgres_data: {}
+  dev_postgres_data_backups: {}
+  production_postgres_data: {}
+  production_postgres_data_backups: {}
+
+services:
+  postgres_dev:
+    build:
+      context: .
+      dockerfile: ./compose/dev/postgres/Dockerfile
+    image: explorer_dev_postgres
+    volumes:
+      - dev_postgres_data:/var/lib/postgresql/data:Z
+      - dev_postgres_data_backups:/backups:z
+    env_file:
+      - ./.envs/.dev/.postgres
+    restart: always
+    ports:
+      - 5432:5432
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: it_jobs_production_postgres
+    volumes:
+      - production_postgres_data:/var/lib/postgresql/data:Z
+      - production_postgres_data_backups:/backups:z
+    env_file:
+      - ./.envs/.production/.postgres
+    restart: always
+    ports:
+      - 5433:5432

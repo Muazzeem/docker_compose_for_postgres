@@ -1,4 +1,4 @@
-# PostgreSQL Prod
+# PostgreSQL
 # ------------------------------------------------------------------------------
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
