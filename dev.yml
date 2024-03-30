@@ -1,10 +1,10 @@
 version: '3'
 
 volumes:
-  jobkhuzi_dev_postgres_data: {}
-  jobkhuzi_dev_postgres_data_backups: {}
-  jobkhuzi_production_postgres_data: {}
-  jobkhuzi_production_postgres_data_backups: {}
+  jobkhuzi_dev_postgres_data: { }
+  jobkhuzi_dev_postgres_data_backups: { }
+  postgres_data: { }
+  postgres_data_backups: { }
 
 services:
   postgres_dev:
@@ -21,14 +21,14 @@ services:
     ports:
       - 5432:5432
 
-  postgres_prod:
+  postgres:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
     image: it_jobs_production_postgres
     volumes:
-      - jobkhuzi_production_postgres_data:/var/lib/postgresql/data:Z
-      - jobkhuzi_production_postgres_data_backups:/backups:z
+      - postgres_data:/var/lib/postgresql/data:Z
+      - postgres_data_backups:/backups:z
     env_file:
       - ./.envs/.production/.postgres
     restart: always
