@@ -1,10 +1,10 @@
 version: '3'
 
 volumes:
-  jobkhuzi_dev_postgres_data: { }
-  jobkhuzi_dev_postgres_data_backups: { }
-  postgres_data: { }
-  postgres_data_backups: { }
+  jobkhuzi_dev_postgres_data: {}
+  jobkhuzi_dev_postgres_data_backups: {}
+  postgres_data: {}
+  postgres_data_backups: {}
 
 services:
   postgres_dev:
