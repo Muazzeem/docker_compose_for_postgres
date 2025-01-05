@@ -1,36 +1,38 @@
-version: '3'
+version: '3'  # Specifies the Docker Compose file format version.
 
-volumes:
-  dev_postgres_data: {}
-  dev_postgres_data_backups: {}
-  postgres_data: {}
-  postgres_data_backups: {}
+volumes:  # Define named volumes for data persistence across container restarts.
+  dev_postgres_data: {}  # Volume for development PostgreSQL data storage.
+  dev_postgres_data_backups: {}  # Volume for backups in the development environment.
+  postgres_data: {}  # Volume for production PostgreSQL data storage.
+  postgres_data_backups: {}  # Volume for backups in the production environment.
 
-services:
-  postgres_dev:
-    build:
-      context: .
-      dockerfile: ./compose/dev/postgres/Dockerfile
-    image: explorer_dev_postgres
-    volumes:
-      - dev_postgres_data:/var/lib/postgresql/data:Z
-      - dev_postgres_data:/backups:z
-    env_file:
-      - ./.envs/.dev/.postgres
-    restart: always
-    ports:
-      - 5432:5432
+services:  # Define the services (containers) that will be created.
 
-  postgres_prod:
-    build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
-    image: it_jobs_production_postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data:Z
-      - postgres_data_backups:/backups:z
-    env_file:
-      - ./.envs/.production/.postgres
-    restart: always
-    ports:
-      - 15432:5432
+  postgres_dev:  # Service for the development PostgreSQL database.
+    build:  # Instructions to build the Docker image.
+      context: .  # Current directory is the build context.
+      dockerfile: ./compose/dev/postgres/Dockerfile  # Path to the Dockerfile for the development environment.
+    image: explorer_dev_postgres  # Name of the resulting Docker image.
+    volumes:  # Mount named volumes to the container.
+      - dev_postgres_data:/var/lib/postgresql/data:Z  # Map dev_postgres_data to PostgreSQL's data directory with SELinux permissions.
+      - dev_postgres_data:/backups:z  # Map dev_postgres_data for storing backups with SELinux permissions.
+    env_file:  # Specify environment variables from a file.
+      - ./.envs/.dev/.postgres  # Path to the environment file for the development environment.
+    restart: always  # Always restart the container if it stops.
+    ports:  # Map container ports to the host.
+      - 5432:5432  # Expose PostgreSQL's default port (5432) for development.
+
+  postgres_prod:  # Service for the production PostgreSQL database.
+    build:  # Instructions to build the Docker image.
+      context: .  # Current directory is the build context.
+      dockerfile: ./compose/production/postgres/Dockerfile  # Path to the Dockerfile for the production environment.
+    image: it_jobs_production_postgres  # Name of the resulting Docker image.
+    volumes:  # Mount named volumes to the container.
+      - postgres_data:/var/lib/postgresql/data:Z  # Map postgres_data to PostgreSQL's data directory with SELinux permissions.
+      - postgres_data_backups:/backups:z  # Map postgres_data_backups for storing backups with SELinux permissions.
+    env_file:  # Specify environment variables from a file.
+      - ./.envs/.production/.postgres  # Path to the environment file for the production environment.
+    restart: always  # Always restart the container if it stops.
+    ports:  # Map container ports to the host.
+      - 15432:5432  # Expose PostgreSQL's default port (5432) but map it to 15432 on the host for production.
+
